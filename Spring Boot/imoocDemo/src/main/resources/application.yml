@@ -1,0 +1,7 @@
+author: anime
+age: 28
+describe: "name: ${author}, age: ${age}"
+
+spring:
+  profiles:
+    active: prod
