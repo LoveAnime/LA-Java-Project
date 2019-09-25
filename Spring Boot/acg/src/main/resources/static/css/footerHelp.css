@@ -1,0 +1,34 @@
+/* 底部页脚部分*/
+.footer_container{
+    width: 100%;
+    font-size: 14px;
+    background-color: #333333;
+    color: #ffffff;
+    text-align: center;
+}
+/* 帮助信息 */
+.help_info ul li{
+    line-height: 1.5rem;
+}
+.help_info ul li:first-child{
+    padding-top: 1.5rem;
+}
+.help_info ul li:last-child{
+    margin-bottom: 1.5rem;
+}
+/* 分享链接 */
+.share_link ul {
+    list-style: none; /* 取消列表前的原点 */
+    margin:0 auto;
+}
+.share_link ul li {
+    display: inline-block; /* 横向排列 */
+    line-height: 1rem;
+    padding: 2.1rem 0.85rem;
+    margin: 1rem;
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: rotate(45deg);
+}
+.share_link ul li:last-child {
+    padding: 2.1rem 0.4rem;
+}

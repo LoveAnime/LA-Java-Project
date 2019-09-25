@@ -1,0 +1,101 @@
+#chessBoard {
+    /*width: 450px; // 此处设置长宽达不到想要的效果，长和宽会被拉伸*/
+    /*height: 450px;*/
+    display: block;
+    margin: 50px auto;
+    box-shadow: -2px -2px 2px #EFEFEF, 5px 5px 5px #b9b9b9;
+}
+
+
+
+/* 五子棋游戏界面的整体布局 */
+.top_frame{
+    width: 1369px;
+    height: 49px;
+    background-color: #222999;
+    margin: 0 auto;
+    text-align: center;
+    color: #ffffff;
+    font-size: 25px;
+    line-height: 49px;
+}
+.body_frame {
+    width: 1024px;
+    height: 676px;
+    background-color: #EFEFEF;
+    margin: 0 auto;
+}
+.left_body_frame {
+    width: 225px;
+    height: 676px;
+    background-color: #BBBBBB;
+    float: left;
+    text-align: center;
+    margin: 0 auto;
+    line-height: 128px;
+}
+.right_body_frame{
+    width: 799px;
+    height: 676px;
+    background-color: #C7EDCC;
+    float: left;
+}
+.bottom_frame {
+    width: 1024px;
+    height: 81px;
+    background-color: #999999;
+    margin:0 auto;
+    line-height: 40px;
+    text-align: center;
+}
+
+
+
+/*游戏按钮的样式设置*/
+.left_body_frame button{
+    margin: 20px;
+}
+.left_body_frame button:nth-child(1){
+    margin-top: 126px;
+}
+
+
+
+/*动画排行榜界面的样式调整*/
+.acg_help{
+    margin: auto;
+    text-align: center;
+}
+
+.acg_rank_result_box table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.search_condition_container{
+    margin-left: 25px;  /*外边距*/
+    margin-top: 30px;
+    padding-top: 25px;  /*内边距*/
+    padding-bottom: 25px;
+    border-bottom: 2px solid gray;  /*边框线*/
+    border-top: 2px solid  gray;
+}
+
+.acg_rank_result_box table {
+    margin: 0 auto;  /* 居中对齐 */
+    margin-top: 20px;
+    width: 1500px;
+    min-height: 25px;
+    min-width: 1300px;
+    line-height: 25px;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.acg_rank_result_box table, .acg_rank_result_box table tr th, .acg_rank_result_box table tr td {
+    border:1px solid #0094ff;
+}
+
+
+
+

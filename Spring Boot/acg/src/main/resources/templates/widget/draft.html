@@ -1,0 +1,80 @@
+<div id="animationBox">
+    <div class="search_condition_container">
+        <table>
+            <tr>
+                <td>搜索条件</td>
+                <td><input type="button" value="搜索" onclick="search()"/>
+                    <input type="button" value="添加" onclick="addAndEdit(event)"/>
+                </td>
+            </tr>
+            <tr>
+                <td>动画类型：</td>
+                <td><select class="search_category">
+                    <option value="" selected="selected">全部</option>
+                    <option value="热血">热血</option>
+                    <option value="校园">校园</option>
+                    <option value="历史">历史</option>
+                    <option value="黑暗">黑暗</option>
+                    <option value="其他">其他</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><div >连载类型：</div></td>
+                <td><select class="search_complete">
+                    <option value="" selected="selected">全部</option>
+                    <option value="已完结">已完结</option>
+                    <option value="连载中">连载中</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><div >所属国家：</div></td>
+                <td><select class="search_country">
+                    <option value="" selected="selected">全部</option>
+                    <option value="JPN">日本</option>
+                    <option value="CHN">中国</option>
+                    <option value="USA">美国</option>
+                    <option value="未知">未知</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><div >是否有资源：</div></td>
+                <td><select class="search_watchAble">
+                    <option value=""  selected="selected">全部</option>
+                    <option value="有">有</option>
+                    <option value="无">无</option>
+                </select></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="acg_rank_result_box">
+        <table>
+            <thead>
+            <tr>
+                <th style="width: 100px">排名</th>
+                <th style="width: 500px">片名</th>
+                <th style="width: 200px">作者</th>
+                <th style="width: 150px">类型</th>
+                <th style="width: 100px">集数</th>
+                <th style="width: 150px">是否完结</th>
+                <th style="width: 150px">所属国家</th>
+                <th style="width: 150px">是否有资源</th>
+                <th style="width: 200px">操作</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="fileMessage"></div>
+
+    <br/>
+    <br/>
+    <div class="head">
+        该页面用来作和动画相关的资讯。<br/><br/>
+        待完善。。。<br/><br/>
+        <input type="button" value="返回主页" onclick="initHome()"/>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Welcome to LA's ACG!</title>
+        <div th:replace="widget/script"></div>
+    </head>
+
+    <body>
+        <article class="container">
+            <!--网站的头部导航-->
+            <div th:replace="widget/homeNavigator"></div>
+            <!--网站的显示主体-->
+            <section class="container_body">
+                <!--音乐-->
+                <div th:replace="music/music"></div>
+            </section>
+        </article>
+    </body>
+</html>

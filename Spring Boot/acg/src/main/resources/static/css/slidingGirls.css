@@ -1,0 +1,18 @@
+#girlList{
+    height: 900px;
+    margin: 0 auto;  /* 居中对齐 */
+    border: 2px solid #000fff;  /* 边框 */
+    /*border-right: 2px solid #000fff;*/  /* 右边框 */
+    overflow: hidden;/* 溢出容器的部分不显示 */
+    position: relative;
+    background-color: orangered;
+}
+
+#girlList img{  /* 空格是后代选择器，包括所有后代；
+                     逗号是选择多个并列的标签；
+                     大于号是第一代后代*/
+    position: absolute;
+    display: block;
+    left: 0px;  /* 左对齐 */
+    border-left: 1px solid red;
+}

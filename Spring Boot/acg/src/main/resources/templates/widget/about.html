@@ -1,0 +1,49 @@
+<link rel="stylesheet" type="text/css" th:href="@{/css/about.css}"/>
+<div id="acgAbout">
+    <section class="gray_section">
+        <div class="one_whole_section">
+            <div class="img_section">
+                <img th:src="@{img/Koala.jpg}" />
+            </div>
+            <div class="txt_section">
+                <h2>正文 第二部分 照片展示</h2>
+                <div class="about_container">
+                    <div>LA's ACG!</div>
+                    <div >欢迎来到帝歌恋雪制作的第一个网页。<br/>
+                        该网页主要搜罗一些与动画、漫画、游戏、音乐以及二次元元素相关的资料和素材。<br/><br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 此处在增加另一个one_whole_section的div -->
+        <!-- 两个one_whole_section的div之间会有缝隙，设置margin和padding都没用
+         这是由于one_whole_section容器的字体大小导致产生了行高引起的，
+         解决办法就是设置one_whole_section的字号为零，再设置子元素的字号-->
+    </section>
+    <section class="purple_section">
+        <div class="header_wrapper">
+            <h>正文 第三部分 分类介绍</h>
+            <p>可以分成2*2四个区域对帝歌恋雪进行全方位介绍，
+                比如从兴趣、工作、专长、生活等方面。
+            </p>
+        </div>
+        <div class="classify_wrapper">
+            <div class="classify_unit">
+                <h>标题1</h>
+                <p>简介1</p>
+            </div>
+            <div class="classify_unit">
+                <h>标题2</h>
+                <p>简介2</p>
+            </div>
+            <div class="classify_unit">
+                <h>标题3</h>
+                <p>简介3</p>
+            </div>
+            <div class="classify_unit">
+                <h>标题4</h>
+                <p>简介4</p>
+            </div>
+        </div>
+    </section>
+</div>

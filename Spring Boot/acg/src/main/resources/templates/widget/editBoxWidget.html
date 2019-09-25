@@ -1,0 +1,64 @@
+<!--遮罩层容器-->
+<script type="text/javascript" th:src="@{js/widget/editBoxWidget.js}"></script>
+<div id="editBoxWidget" class="cover_container" style="display: none" v-cloak="">
+    <!--弹框容器：可以用一个通用类edit_box_container用于统一设置弹框样式，再增加一个类用于对某种具体弹框的样式进行微调-->
+    <main class="edit_box_container">
+        <!--弹框头部title：同理可以增加一个统一设置弹框样式的通用类，再用另一个类对某种具体弹框的样式进行微调-->
+        <p class="edit_box_title">
+            <span v-text="operType">弹框标题</span>
+            <img src="" alt="" />
+            <span class="customize_close" ><img th:src="@{img/customizeClose.png}"/></span>
+        </p>
+        <!--弹框主体部分：同理可增加-->
+        <div class="edit_box_body">
+            <!--每个p包含一组可编辑的信息框-->
+            <p class="edit_info_group">
+                <span>ID</span>
+                <span><input type="number" id="idEdit" v-model="acgData.id"/></span>
+            </p>
+            <p class="edit_info_group">
+                <span>片名</span>
+                <span><input type="text" id="acgNameEdit" v-model="acgData.acgName"/></span>
+            </p>
+            <p class="edit_info_group">
+                <span>作者</span>
+                <span><input type="text" id="authorEdit" v-model="acgData.acgAuthor"/></span>
+            </p>
+            <p class="edit_info_group">
+                <span>类型</span>
+                <span><input type="text" id="categoryEdit" v-model="acgData.acgCategory"/></span>
+            </p>
+            <p class="edit_info_group">
+                <span>集数</span>
+                <span><input type="number" id="episodeEdit" v-model="acgData.episode"/></span>
+            </p>
+            <p class="edit_info_group">
+                <span>所属国家</span>
+                <span><select id="countryEdit" v-model="acgData.country">
+                    <option v-for="item in countryList" v-bind:value="item.value">{{item.txt}}</option></select>
+                </span>
+            </p>
+            <p class="edit_info_group">
+                <span>是否完结</span>
+                <span><select id="completedEid" v-model="acgData.completed">
+                    <option v-for="item in completedList" v-bind:value="item.value">{{item.txt}}</option></select>
+                </span>
+            </p>
+            <p class="edit_info_group">
+                <span>是否可看</span>
+                <span><select id="watchAbleEid" v-model="acgData.watchAble">
+                    <option v-for="item in enableList" v-bind:value="item.value">{{item.txt}}</option></select>
+                </span>
+            </p>
+            <p class="edit_info_group">
+                <span>附加信息</span>
+                <span><textarea placeholder="可以在此处填入信息增加说明" name="" rows="" cols="" v-model="acgData.memo"></textarea></span>
+            </p>
+        </div>
+        <!--弹框头部title：同理可以增加一个统一设置弹框样式的通用类，再用另一个类对某种具体弹框的样式进行微调-->
+        <p class="edit_box_button">
+            <button class="blueButton confirm">确定</button>
+            <button class="grayButton cancer">取消</button>
+        </p>
+    </main>
+</div>

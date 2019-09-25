@@ -1,0 +1,432 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+/* 样式重设 */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+
+
+
+/*纯CSS设计的进度条可以在www.loading.io网站下载CSS样式*/
+.loading_container {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    background-color: rgba(217,217,217,0.75);!important;
+}
+.loading_container .loading_pic {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;  !important;
+}
+.loading_container .loading_pic i {
+    display: block;
+    float: left;
+    width: 6px;
+    height: 50px;
+    background-color: #0000cc;
+    margin: 0 2px;
+    -webkit-transform: scaleY(0.4);
+    -ms-transform: scaleY(0.4);
+    transform: scaleY(0.4);
+    -webkit-animation: load 1.2s infinite;
+    animation: load 1.2s infinite;!important;
+}
+/*Y轴高度缩小到0.6、一个动画过程持续1.2s,循环播放*/
+@-webkit-keyframes load {  /* 定义一个动画：0~20的过程高度从0.4变化到1；20~40的过程高度从1变到0.4；0.4~1的过程保持0.4不变 */
+    0%,40%,100% {
+        -webkit-transform: scaleY(0.4);
+        transform: scaleY(0.4)
+    }
+    20% {
+        -webkit-transform: scaleY(1);
+        transform: scaleY(1)
+    }
+}
+@keyframes load {  /* 定义一个动画：0~20的过程高度从0.4变化到1；20~40的过程高度从1变到0.4；0.4~1的过程保持0.4不变 */
+    0%,40%,100% {
+        -webkit-transform: scaleY(0.4);
+        transform: scaleY(0.4)
+    }
+    20% {
+        -webkit-transform: scaleY(1);
+        transform: scaleY(1);
+    }
+}
+.loading_container .loading_pic i:nth-child(1){}  /* 设置五个竖线设置延迟变化 */
+.loading_container .loading_pic i:nth-child(2){-webkit-animation-delay: 0.1s;animation-delay: 0.1s}
+.loading_container .loading_pic i:nth-child(3){-webkit-animation-delay: 0.2s;animation-delay: 0.2s}
+.loading_container .loading_pic i:nth-child(4){-webkit-animation-delay: 0.3s;animation-delay: 0.3s}
+.loading_container .loading_pic i:nth-child(5){-webkit-animation-delay: 0.4s;animation-delay: 0.4s}
+
+
+
+/* 按钮样式的统一设置：不管什么地方的按钮都是（继承于）这种样式 */
+.blueButton,.grayButton {  /* 统一设置按钮的大小、字体 */
+    display: inline-block;
+    width: 80px !important;
+    height: 30px !important;
+    line-height: 30px !important;
+    text-align: center !important;
+    border-radius: 4px !important;
+    font-size: 14px !important;
+    font-family: "微软雅黑" !important;
+    cursor: pointer;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+}
+.blueButton{  /* 蓝色按钮：颜色、边框 */
+    color: #fff !important;
+    background-color: #20a0ff !important;
+    border: none !important;
+}
+.blueButton:hover{  /* 鼠标悬浮时的样式：改变颜色 */
+    background-color: #4db3fe !important;
+}
+.blueButton:active{  /* 鼠标单击时的样式：改变颜色 */
+    background-color: #1f8fe1 !important;
+}
+.grayButton{  /* 灰色按钮：颜色、边框 */
+    color: #999 !important;
+    background-color: #fff !important;
+    border: 1px solid #ccc !important;
+}
+.grayButton:hover{  /* 鼠标悬浮时的样式：改变颜色 */
+    color: #4db3fe !important;
+    border: 1px solid #4db3fe !important;
+}
+.grayButton:active{  /* 鼠标单击时的样式：改变颜色 */
+    background-color: #1f8fe1 !important;
+}
+
+
+
+/*统一设置遮罩层的背景样式*/
+/*说明：不同弹框的背景遮罩层的样式应该是一致的*/
+.cover_container {  /* 整个透明区域的大小、位置、透明度 */
+    position: fixed;
+    /*position: absolute;*/
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(75, 75, 75, 0.75) !important;
+    z-index: 99;
+    overflow: hidden;
+    min-width: 666px;
+    font-size: 15px;
+}
+
+
+
+/*统一设置弹框容器的样式*/
+/*说明：一般而言最好把弹框的通用样式和具体编辑框微调样式分开写，但因为本项目主要用到的是编辑框，且不同弹框的高度可能差距较大，故此处只设置通用类*/
+.edit_box_container{  /*编辑框（不包含透明区域）的大小、位置、背景色、字体*/
+    position: fixed;
+    width: 640px;
+    height: 500px;
+    left: 50%;
+    top: 50%;
+    margin-left: -320px;
+    margin-top: -250px;
+    background: #F5F5F5;
+    border-radius: 0.2rem;
+}
+
+/*统一设置弹框title容器的样式*/
+/*同理可以增加继承于通用类的具体类来对不同弹框的title进行微调*/
+.edit_box_title {  /* 间距、分割线 */
+    line-height: 63px;
+    padding: 0 20px;
+    border-bottom: 1px solid #E6E6E6;
+}
+
+/*设置弹框title容器的关闭按钮*/
+.customize_close{  /* 图片向右滑动 */
+    float: right;
+}
+.customize_close img {  /* 图片居中显示滑动 */
+    cursor: pointer;
+    vertical-align: middle;
+    width:20px;
+    height: 20px;
+}
+
+/*统一设置弹框尾部按钮容器的样式*/
+.edit_box_button {  /* 位置、大小、边距 */
+    text-align: center;  /* 按钮居中显示 */
+    overflow: hidden;
+    height: 80px;
+    padding-top: 1rem;
+    padding-right: 1rem;
+    border-top: 1px solid #E6E6E6;
+}
+
+/*再对编辑框中的按钮进行微调*/
+.edit_box_button button{
+    float: right;
+    margin-right: 1rem;
+}
+
+/*统一设置弹框主体内容的样式*/
+.edit_box_body { /* 边距、背景颜色、调整字体 */
+    margin: 10px 20px 0 10px;  /* 上 右 下 左 */
+    padding: 5px 10px;
+    font-size: 14px;
+    background: #ffffff;
+}
+
+/* 统一设置每一组信息的样式 */
+.edit_info_group {
+    line-height: 2rem;
+    overflow: hidden;
+}
+.edit_info_group span { /* span是行内元素，不能设置宽度和高度，需要进行特殊处理 */
+    float: left;  /* 这种方法两个span元素紧挨着，可以设置（20%+80%），但是可能有兼容性问题 */
+    /*display: inline-block;*/  /*这种方法两个span元素有间距，设置（20%+80%）一行放不下*/
+}
+.edit_info_group>span:nth-child(1) {  /* 分别设置两列的宽度和颜色 */
+    width: 21%;
+    color: #999999;
+}
+.edit_info_group>span:nth-child(2) {  /* 分别设置两列的宽度和颜色 */
+    width: 79%;
+}
+
+/*再对最后一组信息作特殊调整*/
+.edit_info_group:last-child>span:first-child:before{  /* 第一列前面增加灰色星号 */
+    content: "*";
+    color: #999999;
+}
+.edit_info_group:last-child>span:last-child textarea{
+    width: 79%;
+    height: 3.3rem;
+    font-family: "微软雅黑";
+    border-radius: 5px;
+    padding: 5px 10px;
+    border: 1px solid #E6E6E6;
+    overflow: auto;
+    resize: none;
+}
+
+
+
+/*统一设置页码按钮的通用样式*/
+.pagination_set span {
+    float: left; /*设置浮动属性就可以对行内元素span设置宽高等属性*/
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    line-height: 36px; /*垂直居中*/
+    text-align: center; /*水平居中*/
+    margin: 10px;
+    border: 1px solid #A9A9A9;
+    border-radius: 1px;
+    cursor: pointer;
+}
+/*取消页码按钮（a标签）的默认样式*/
+.pagination_set a{
+    text-decoration: none; /*取消默认样式*/
+    color: #000fff;  /*设置字体颜色*/
+}
+/* 设置页码按钮鼠标悬浮时的样式：改变边框颜色（不能设置字体颜色?） */
+.pagination_set span:hover{
+    border: 1px solid #000fff;
+}
+/*单独增加上一页和下一页按钮的宽度*/
+.pagination_set .previous_page,.pagination_set .next_page{
+    width: 81px;
+}
+/*增加正在访问的页码的样式*/
+.visitingPage{  /* 需要设置优先级，不然会出错 */
+    border: none !important;
+    cursor: default !important;
+}
+.visitingPage a{  /*设置正在访问的页码按钮的颜色（为什么要单独设置？）*/
+    color: #000000;
+}
+
+
+
+/*文件列表样式设计*/
+/*整个文档界面的容器*/
+.document_list_container {
+    width: 100%;
+    height: 100%;
+    min-width: 500px;
+    overflow: hidden;
+}
+
+/*设置文档头部容器*/
+.list_header_container .file_list_set {
+    width: 100%;
+    height: 2rem;
+    line-height: 2rem;
+    border-bottom: 1px solid #DEDEDE;
+    font-size: 16px;
+    color: #BBBBBB;
+    padding-left: 2%;
+}
+.list_header_container .file_list_set>span {
+    cursor: pointer;
+}
+
+/*文档列表主体容器*/
+.list_body_container{
+}
+
+/*统一设置每一行文件的样式*/
+.list_body_container .file_list_set {  /* 主要包括大小、字体、颜色、边框、位置 */
+    width: 100%;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    border-bottom: 1px solid #DEDEDE;
+    font-size: 16px;
+    font-family: "微软雅黑";
+    color: #000000;
+    padding-left: 2%;
+}
+
+/*对每一列作特殊处理*/
+.file_list_set>span {
+    float: left;  /* 设置浮动效果才可以对行内元素的宽高进行设置 */
+    white-space: nowrap;  /* 处理元素空白区域：文本不换行 */
+    overflow: hidden;  /* 文本溢出，隐藏文字 */
+    text-overflow: ellipsis;  /* 超出部分用省略号代替 */
+    text-align: center;  /* 文字居中对齐 */
+    padding: 0 1%;
+    /*height: 2.5rem;  !* 设置高度可以保证元素不会被撑开，但是文字显示异常 *!*/
+}
+
+/*设置文件列表每一列的宽度，需要设置float才能生效*/
+.document_list_container .file_id {
+    width: 7%;
+}
+.document_list_container .file_name {
+    width: 13%;
+}
+.document_list_container .file_author {
+    width: 7%;
+}
+.document_list_container .file_category {
+    width: 7%;
+}
+.document_list_container .file_episode {
+    width: 7%;
+}
+.document_list_container .file_country {
+    width: 7%;
+}
+.document_list_container .file_completed {
+    width: 7%;
+}
+.document_list_container .file_enable {
+    width: 7%;
+}
+.document_list_container .file_memo {
+    width: 7%;
+}
+.document_list_container .file_operType {
+    width: 7%;
+}
+
+/*设置文件鼠标悬浮样式*/
+.list_body_container .file_list_set:hover {
+    background-color: #D2E9FF;
+    height: 3rem;
+    line-height: 3rem;
+}
+.list_body_container .file_name span:hover{
+    cursor: pointer;
+    font-size: 17px;
+    color: #000fff;
+}
+
+
+
+/* 弹出立即消失的提示框样式 */
+.tip_container {
+    position: relative;
+    text-align: center;
+    padding: 0 24px;
+    background: #cccccc;
+    border: 1px solid #cccccc;
+    display: inline-block;
+    border-radius: 6px;
+    line-height: 33px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*  统一设置链接（<a>标签 ）样式：包括导航栏和编辑删除操作 */
+a {
+    margin: auto 5px;
+}
+a:link {
+    color:#0094ff ;
+    text-decoration: none;
+}
+a:visited {
+    color: #0094ff;
+    text-decoration: none;
+}
+a:hover {
+    color: #0094ff;
+    text-decoration: underline;
+}

@@ -1,0 +1,20 @@
+<script type="text/javascript" th:src="@{/js/game/playChess.js}"></script>
+<main class="chessGameContainer">
+    <div class="top_frame">五子棋游戏</div>
+    <div class="body_frame">
+        <div class="left_body_frame">
+            <button id="startButton" class="blueButton" >开始游戏</button>
+            <button id="restartButton" class="blueButton" >重新开始</button>
+            <button id="optionButton" class="blueButton" >游戏设置</button>
+            <button id="helpButton" class="blueButton" >游戏帮助</button>
+        </div>
+        <div class="right_body_frame">
+            <canvas id="chessBoard"></canvas>
+        </div>
+    </div>
+    <div class="bottom_frame">
+        五子棋V2.0：帝歌恋雪制作，完成于2017年11月7日。<br />
+        <button class="blueButton" onclick="initHome()">返回主页</button>
+    </div>
+</main>
+<div th:replace="game/gameOption"></div>

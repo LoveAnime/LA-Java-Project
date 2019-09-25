@@ -1,0 +1,21 @@
+<!--页码容器：主要用于调整边距-->
+<script type="text/javascript" th:src="@{js/widget/pageJump.js}"></script>
+<div id="pageJump" class="page_jump_container" style="display: none" v-cloak="">
+    <!--页码容器：用于调整整组页码在页面中的整体样式-->
+    <main class="pagination_set">
+        <!--上一页按钮-->
+        <span class="previous_page" v-if="pageInfo.pageNow &gt; 1" v-on:click="switchPrevPage()">
+            <a href="#">&lt;上一页</a>
+        </span>
+        <!--可以在此增加省略号-->
+        <!--页码按钮-->
+        <span class="page_number" v-on:click="switchPage()" v-for="(item,index) in numList"
+              v-bind:class="{visitingPage:((index+1)==pageInfo.pageNow)}">
+            <a href="#">{{item}}</a>
+        </span>
+        <!--下一页按钮-->
+        <span class="next_page" v-show="pageInfo.pageNow &lt; pageInfo.pageCount" v-on:click="switchNextPage()">
+            <a href="#">下一页&gt;</a>
+        </span>
+    </main>
+</div>

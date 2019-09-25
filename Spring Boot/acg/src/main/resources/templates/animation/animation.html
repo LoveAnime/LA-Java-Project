@@ -1,0 +1,95 @@
+<script type="text/javascript" th:src="@{/js/animation/animation.js}" ></script>
+<div id="animationBox" style="display: none;" v-cloak="">
+    <!--排行榜搜索条件-->
+    <div class="search_condition_container">
+        <table>
+            <tr>
+                <td>搜索条件</td>
+                <td><input type="button" value="搜索" v-on:click="search()"/>
+                    <input type="button" value="添加" v-on:click="addAndEdit($event)"/>
+                </td>
+            </tr>
+            <tr>
+                <td>动画类型：</td>
+                <td><select class="search_category">
+                    <option value="" selected="selected">全部</option>
+                    <option value="热血">热血</option>
+                    <option value="校园">校园</option>
+                    <option value="历史">历史</option>
+                    <option value="黑暗">黑暗</option>
+                    <option value="其他">其他</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><div >连载类型：</div></td>
+                <td><select class="search_complete">
+                    <option value="" selected="selected">全部</option>
+                    <option value="已完结">已完结</option>
+                    <option value="连载中">连载中</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><div >所属国家：</div></td>
+                <td><select class="search_country">
+                    <option value="" selected="selected">全部</option>
+                    <option value="日本">日本</option>
+                    <option value="中国">中国</option>
+                    <option value="美国">美国</option>
+                    <option value="其他">其他</option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><div >是否有资源：</div></td>
+                <td><select class="search_watchAble">
+                    <option value=""  selected="selected">全部</option>
+                    <option value="有">有</option>
+                    <option value="无">无</option>
+                </select></td>
+            </tr>
+        </table>
+    </div>
+
+    <!--文件列表容器-->
+    <main id="acgRankList" class="document_list_container">
+        <!--增加一个用于遮罩层的容器-->
+        <div class="loadMask">
+            <!--文件列表头部-->
+            <div class="list_header_container">
+                <div class="file_list_set" v-on:click="chooseSortField($event)">
+                    <span class="file_id">排名</span>
+                    <span class="file_name">片名</span>
+                    <span class="file_author">作者</span>
+                    <span class="file_category">类型</span>
+                    <span class="file_episode">集数</span>
+                    <span class="file_country">所属国家</span>
+                    <span class="file_completed">是否完结</span>
+                    <span class="file_enable">是否有资源</span>
+                    <span class="file_memo">附加信息</span>
+                    <span class="file_operType">操作</span>
+                </div>
+            </div>
+
+            <!--文件列表主体-->
+            <div class="list_body_container" v-cloak="">
+                <div class="file_list_set" v-for="acg in rankList">
+                    <span class="file_id" v-text="acg.id"></span>
+                    <span class="file_name"><span v-text="acg.acgName"></span></span>
+                    <span class="file_author" v-text="acg.acgAuthor!=''?acg.acgAuthor:'未知'"></span>
+                    <span class="file_category" v-text="acg.acgCategory!=''?acg.acgCategory:'未知'"></span>
+                    <span class="file_episode" v-text="acg.episode>0?acg.episode:'未知'"></span>
+                    <span class="file_country" v-text="acg.country!=''?acg.country:'未知'"></span>
+                    <span class="file_completed" v-text="acg.completed!=''?acg.completed:'未知'"></span>
+                    <span class="file_enable" v-text="acg.watchAble!=''?acg.watchAble:'未知'"></span>
+                    <span class="file_memo" v-text="acg.memo!=''?acg.memo:'无'"></span>
+                    <span class="file_operType" v-on:click='addAndEdit($event)'>
+                        <a href='#' value='edit'>编辑</a>
+                        <a href='#' value='delete'>删除</a>
+                    </span>
+                </div>
+            </div>
+
+            <!--信息提示-->
+            <div class="fileMessage"></div>
+        </div>
+    </main>
+</div>

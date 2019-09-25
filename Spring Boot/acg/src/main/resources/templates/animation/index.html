@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Welcome to LA's ACG!</title>
+        <div th:replace="widget/script"></div>
+    </head>
+
+    <body>
+        <article class="container">
+            <!--网站的头部导航-->
+            <div th:replace="widget/homeNavigator"></div>
+            <!--网站的显示主体-->
+            <section class="container_body">
+                <!--动画-->
+                <div th:replace="animation/animation"></div>
+                <!--页面跳转-->
+                <div th:replace="widget/pageJump"></div>
+            </section>
+        </article>
+    </body>
+    <!--进度条-->
+    <div th:replace="widget/loading"></div>
+    <!--编辑框-->
+    <div th:replace="widget/editBoxWidget"></div>
+    <!--提示框-->
+    <div th:replace="widget/tips"></div>
+</html>

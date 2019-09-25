@@ -1,0 +1,18 @@
+<link type="text/css" rel="stylesheet" th:href="@{/css/slidingGirls.css}"/>
+<script type="text/javascript" th:src="@{/js/girl/slidingGirls.js}"></script>
+<div id="girlContainer">
+    <!--引用文件的路径需要添加虚拟路径，即href="/test/css/slingdoors.css"；
+            可以使用thymeleaf模板简化（灵活），即引用@来表示url的相对路径-->
+    <h2>《LA的ACG排名：前100名》</h2>
+    <p>美女滚动页面！</p><br />
+    <div id="girlList">
+        <img th:src="@{/img/girl/girl3.jpg}" title="美女1" alt="picture.baidu.com"/>
+        <img th:src="@{/img/girl/girl2.jpg}" title="美女2" alt="picture.baidu.com"/>
+        <img th:src="@{/img/girl/girl5.jpg}" title="美女5" alt="picture.baidu.com"/>
+        <img th:src="@{/img/girl/girl6.jpg}" title="美女6" alt="picture.baidu.com"/>
+        <img th:src="@{/img/girl/girl7.jpg}" title="美女7" alt="picture.baidu.com"/>
+    </div>
+    <br/>
+    <input type="button" value="返回主页" onclick="initHome()"/>
+</div>
+

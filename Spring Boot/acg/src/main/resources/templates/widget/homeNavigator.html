@@ -1,0 +1,22 @@
+<link type="text/css" rel="stylesheet" th:href="@{/css/homeNavigator.css}"/>
+<script type="text/javascript" th:src="@{/js/widget/homeNavigator.js}"></script>
+<div id="navContainer" v-cloak="">
+    <div class="nav_container">
+        <div id="leftNav">
+            <div v-on:click="switchAboutHome()">
+                <img id="homeLogo" th:src="@{/img/luFei.png}" title="LA的主页" alt="主页图标"/>
+                <div id="homeName">天琊网</div>
+            </div>
+            <ul id="nav-item">
+                <li><a v-on:click="switchAnimationHome"> 动画</a></li>
+                <li><a v-on:click="switchComicHome"> 漫画</a></li>
+                <li><a v-on:click="switchGameHome"> 游戏</a></li>
+                <li><a v-on:click="switchMusicHome"> 音乐</a></li>
+                <li><a v-on:click="switchGirlHome"> 美女</a></li>
+            </ul>
+        </div>
+        <div id="rightNav">
+            <input  class="navSearchKey" type="text" placeholder="请在此处输入关键字进行搜索" />
+        </div>
+    </div>
+</div>

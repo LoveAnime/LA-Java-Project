@@ -1,0 +1,99 @@
+.about_container {
+    margin: 2em;
+}
+
+.about_container div {
+    font-size: 30px;
+}
+.about_container div:nth-child(2) {
+    font-size: 25px;
+    font-family: 'Adobe 楷体 Std R';
+}
+
+.about_container ul{
+}
+
+
+
+/* 网站首页主体部分的样式设置 */
+/* 第一部分 个人简介 */
+.green_section{
+    background-color: #089BB0;
+    height: 300px;
+}
+
+/* 第二部分 个人生活照片的展示界面 */
+.gray_section{
+    background-color: #252F34;
+    color: #ffffff;
+}
+.img_section {
+    width: 45%;
+}
+.img_section img{
+    width: 100%;  /* 不进行此设计，图片会强行撑开容器 */
+}
+.txt_section {
+    width: 55%;
+}
+.one_whole_section>div{
+    float: left;
+}
+/* 子元素设置浮动，会导致父元素坍缩，即高度变成了零，会导致页面变形；
+   为了不影响之前的页面布局，需要清除父元素的浮动效果*/
+/* 在元素后插入新的内容：非浮动的空元素 */
+.one_whole_section:after{
+    content: '';  /* 不插入内容 */
+    display: block;
+    clear: both;
+}
+
+/* 第三部分 分类介绍的展示界面 */
+.purple_section{
+    width: 100%;
+    background-color: #3F3965;
+    color: #ffffff;
+}
+.purple_section .banner_container{
+    width: 66%;
+    text-align: center;
+    margin: 0 auto;
+}
+.purple_section .classify_wrapper{
+    width: 66%;
+    margin: 0 auto;
+}
+.classify_wrapper .classify_unit {
+    float: left;
+    width: 50%; /* 分成两栏 */
+    min-height: 200px;
+    padding: 20px;  /* 内边距和边框会撑开容器大小，所以需要下面行设置盒子模型 */
+    -webkit-box-sizing: border-box; /*Safari3.2+*/
+    -moz-box-sizing: border-box;  /*Firefox3.5+*/
+    -o-box-sizing: border-box; /*Opera9.6*/
+    -ms-box-sizing: border-box; /*IE8*/
+    /*border:1px solid #ffffff;*/
+}
+/* 去掉浮动效果导致父元素的坍缩(父元素高度坍缩，没有背景颜色等等) */
+.classify_wrapper:after{
+    content: '';  /* 不插入内容 */
+    display: block;
+    clear: both;
+}
+/* 加深颜色（增加透明度） */
+.classify_wrapper .classify_unit:nth-child(1) {
+    background-color: rgba(0, 0, 0, 0.10);
+
+}
+.classify_wrapper .classify_unit:nth-child(2) {
+    background-color: rgba(0, 0, 0, 0.14);
+
+}
+.classify_wrapper .classify_unit:nth-child(3) {
+    background-color: rgba(0, 0, 0, 0.18);
+
+}
+.classify_wrapper .classify_unit:nth-child(4) {
+    background-color: rgba(0, 0, 0, 0.22);
+
+}
