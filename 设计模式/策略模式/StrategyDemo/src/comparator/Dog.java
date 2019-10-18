@@ -1,9 +1,9 @@
 package comparator;
 
 /**
- * author 帝歌恋雪
- * date 2019-10-13 12:55
- * description 不需要增加比较方法，或者实现接口
+ * @author 陌上丶天琊
+ * @date 2019-10-13 12:55
+ * 描述： 不需要增加比较方法，或者实现接口
  */
 public class Dog {
     private int hight;

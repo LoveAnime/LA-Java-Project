@@ -3,9 +3,9 @@ package comparable1;
 import java.util.Arrays;
 
 /**
- * author 帝歌恋雪
- * date 2019-10-13 11:31
- * description
+ * @author 陌上丶天琊
+ * @date 2019-10-13 11:31
+ * 描述：
  */
 public class Main {
     public static void main(String[] args) {

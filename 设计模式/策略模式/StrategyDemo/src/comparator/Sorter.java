@@ -1,9 +1,9 @@
 package comparator;
 
 /**
- * author 帝歌恋雪
- * date 2019-10-13 11:31
- * description：传入排序对象和比较器
+ * @author 陌上丶天琊
+ * @date 2019-10-13 11:31
+ * 描述：：传入排序对象和比较器
  * 优点：可以根据不同的比较器实现不同的排序规则
  */
 public class Sorter<T> {
