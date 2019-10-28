@@ -1,4 +1,4 @@
-package com.anime.chainOfResponsibility.filterDemo;
+package com.anime.chainOfResponsibility.filter;
 
 /**
  * @author 陌上丶天琊

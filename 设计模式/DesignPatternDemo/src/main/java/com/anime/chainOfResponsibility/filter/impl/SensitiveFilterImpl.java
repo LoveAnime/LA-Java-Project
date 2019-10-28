@@ -1,7 +1,7 @@
-package com.anime.chainOfResponsibility.filterDemo.impl;
+package com.anime.chainOfResponsibility.filter.impl;
 
-import com.anime.chainOfResponsibility.filterDemo.Filter;
-import com.anime.chainOfResponsibility.filterDemo.Message;
+import com.anime.chainOfResponsibility.filter.Filter;
+import com.anime.chainOfResponsibility.filter.Message;
 
 /**
  * @author 陌上丶天琊
