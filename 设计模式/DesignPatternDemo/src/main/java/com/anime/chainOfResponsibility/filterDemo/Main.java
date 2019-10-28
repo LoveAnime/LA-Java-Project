@@ -1,9 +1,9 @@
-package com.anime.chainOfResponsibility;
+package com.anime.chainOfResponsibility.filterDemo;
 
-import com.anime.chainOfResponsibility.impl.FaceFilterImpl;
-import com.anime.chainOfResponsibility.impl.HTMLFilterImpl;
-import com.anime.chainOfResponsibility.impl.SensitiveFilterImpl;
-import com.anime.chainOfResponsibility.impl.URLFilterImpl;
+import com.anime.chainOfResponsibility.filterDemo.impl.FaceFilterImpl;
+import com.anime.chainOfResponsibility.filterDemo.impl.HTMLFilterImpl;
+import com.anime.chainOfResponsibility.filterDemo.impl.SensitiveFilterImpl;
+import com.anime.chainOfResponsibility.filterDemo.impl.URLFilterImpl;
 
 import java.time.LocalDateTime;
 

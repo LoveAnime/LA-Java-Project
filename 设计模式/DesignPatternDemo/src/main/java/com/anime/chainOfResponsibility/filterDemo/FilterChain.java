@@ -1,4 +1,4 @@
-package com.anime.chainOfResponsibility;
+package com.anime.chainOfResponsibility.filterDemo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +18,7 @@ public class FilterChain implements Filter {
         return this;
     }
 
+    @Override
     public void doFilter(Message msg) {
         for (Filter f : filters) {
             f.doFilter(msg);

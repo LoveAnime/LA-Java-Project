@@ -1,4 +1,4 @@
-package com.anime.chainOfResponsibility;
+package com.anime.chainOfResponsibility.filterDemo;
 
 import lombok.Data;
 
