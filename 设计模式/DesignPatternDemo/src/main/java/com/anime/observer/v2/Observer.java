@@ -6,5 +6,5 @@ package com.anime.observer.v2;
  * 描述：观察者接口
  */
 public interface Observer {
-    public void actionOnWakeUp();
+    void actionOnWakeUp();
 }

@@ -1,6 +1,8 @@
 package com.anime.strategy;
 
 /**
+ * 策略模式
+ *
  * @author 陌上丶天琊
  * @date 2019-10-13 11:31
  * 描述: 从最基础的排序方式，到实现Comparable接口，到Comparator引入策略模式
