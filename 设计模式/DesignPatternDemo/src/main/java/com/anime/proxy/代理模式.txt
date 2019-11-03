@@ -1,1 +1,22 @@
 静态代理、动态代理、Spring AOP。
+
+静态代理：将被代理对象直接添加到代理类中，并添加代理行为（执行被代理对象的方法）。
+    缺点：一个代理对象只能代理一个特定的类，扩展性较差。
+
+动态代理：分离代理行为和被代理对象。
+    JDK动态代理：
+        代理类: java.lang.reflect.Proxy.newProxyInstance()
+        代理行为: java.lang.reflect.InvocationHandler.invoke()
+        优点：被代理对象和行为可以按需扩展
+        局限：只能基于接口
+
+        代理过程：基于接口、反射实现
+        底层实现：利用ASM技术直接操作字节码文件(*.class)，而不需要修改源文件再编译成class文件
+            ps：也正是因为ASM技术，java才能称为动态语言，如运行时可以修改变量类型，增删方法等。
+        此外：JVM运行的是class文件，所以不管是java、scala、groovy等，都可以编译成class文件，然后运行在JVM上。
+
+    cglib动态代理: 代码生成库技术
+        局限：final修饰的类不能动态代理，ASM技术可以
+
+        cglib基于子类、拦截器实现；底层也是ASM技术操作。
+        spring AOP也是基于ASM技术，动态代理的底层都是通过ASM技术操作的。
