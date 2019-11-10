@@ -1,0 +1,7 @@
+wrapper
+
+接口转换器
+
+常用场景：java.io、jdbc-odbc-bridge(不是桥接模式)、ASM transformer
+
+常见的WindowAdapter不是适配器模式。

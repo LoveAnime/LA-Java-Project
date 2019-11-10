@@ -1,0 +1,27 @@
+[toc]
+
+## 什么是Java中的ConcurrentHashMap？
+
+## ConcurrentHashMap是线程安全的吗？
+是的，ConcurrentHashMap在Java中是线程安全的，这意味着两个线程可以修改map而不会损坏其内部数据结构，例如数组和链表。
+相对应的，HashMap不是线程安全的，将HashMap暴露给多个线程可能会损坏内部数据结构，并可能会使map完全无用，因为许多链接可能丢失或指向错误的元素。
+
+## ConcurrentHashMap如何实现线程安全？
+java.util.ConcurrentHashMap通过将Map分割成段并且仅锁定所需的段而不是锁定整个地图来实现线程安全性。所以，是的，它使用锁定来实现线程安全，但由于它不会锁定整个地图，所以它的性能更好。这种技术也被称为锁剥离。
+
+## 可以同时从ConcurrentHashMap读取多个线程吗？
+可以，ConcurrentHashMap允许并行读取而不锁定，因为读取操作不需要锁定，是线程安全的。
+
+## 可以同时在ConcurrentHashMap上一个线程读取和其他写入吗？
+有些情况是可以的。例如，如果写入操作正在修改ConcurrentHashmap的一个段，并且读取操作正在其他段发生，则读取器将不会阻止，但是如果读取器线程也尝试从相同的段读取，则读取器会堵塞直到写入器完成。
+
+## 如何在ConcurrentHashMap中原子更新值？
+使用concurrentHashMap的replace（）函数，它接受旧值和新值，只有当地图中的现有值与提供的旧值匹配时才更新地图，这意味着地图在其调用期间不会同时修改。如果现有值更改并且与旧值不匹配，则替换失败并返回false。
+
+## 如果在ConcurrentHashMap中添加一个新映射，而一个线程正在迭代，会发生什么？
+ConcurrentHashMap允许一边更新、一边遍历，也就是说在Iterator对象遍历的时候，ConcurrentHashMap也可以进行remove、put操作，且遍历的数据会随着remove,put操作产出变化。
+
+## ConcurrentHashMap的迭代器是否故障安全或故障快速？
+故障安全的迭代器，不会抛出ConcurrentModificationException。
+ConcurrentHashMap返回的迭代器也是弱一致的，这意味着如果Map在迭代期间被修改，则它可能反映最近的修改。
+而Hashtable在使用iterator遍历的时候，如果其他线程，包括本线程对Hashtable进行了put，remove等更新操作的话，就会抛出ConcurrentModificationException异常。
