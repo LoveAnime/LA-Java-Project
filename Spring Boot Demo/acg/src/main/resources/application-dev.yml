@@ -1,0 +1,12 @@
+# 访问端口号与上下文
+server:
+  port: 8080
+  context-path: /
+
+# 数据库配置
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/acg?useUnicode=true&characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver

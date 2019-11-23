@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--命令空间对应DAO层的接口-->
+<mapper namespace="com.anime.acg.dao.AcgDao">
+
+    <!--resultMap配置记录和实体(java对象)的映射关系：所有字段-->
+    <!--id标签对应主键，result标签对应表头结构，type对应实体类-->
+    <!--column对应数据库/记录的字段，property对应实体的字段，jdTypebc对应每一个字段的类型-->
+    <resultMap id="AllFieldResultMap" type="com.anime.acg.model.AcgModel">
+        <id column="ID" property="id" jdbcType="INTEGER" />
+        <result column="ACG_NAME" property="acgName" jdbcType="VARCHAR"/>
+        <result column="ACG_AUTHOR" property="acgAuthor" jdbcType="VARCHAR"/>
+        <result column="ACG_CATEGORY" property="acgCategory" jdbcType="VARCHAR"/>
+        <result column="EPISODE" property="episode" jdbcType="INTEGER" />
+        <result column="COMPLETED" property="completed" jdbcType="VARCHAR"/>
+        <result column="WATCH_ABLE" property="watchAble" jdbcType="VARCHAR"/>
+        <result column="COUNTRY" property="country" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="MEMO" property="memo" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 所有列名的sql字段 -->
+    <sql id="All_Column_List">
+        ID, ACG_NAME, ACG_AUTHOR, ACG_CATEGORY, EPISODE, COMPLETED, WATCH_ABLE, COUNTRY, CREATE_TIME, UPDATE_TIME, MEMO
+    </sql>
+
+    <!--根据主键查询一条记录：resultMap表明输出的类型（不管一条记录还是多条记录都是AllFieldResultMap类型）-->
+    <!--数据库查询语句：id对应dao层的查询方法名；parameterType对应dao层传过来的参数类型；resultType对应单条查询结果的基本类型，
+        如com.anime.acg.model.AcgModel。需要注意的是，就算查询结果是多条记录的列表，resultType也是对应其中单条数据的数据类型。
+        resultMap是将在Java中的PO类在配置文件中一一对应（记录与实体一一映射）-->
+    <!--当id使用param注解时，不需要设置parameterType；-->
+    <select id="selectByPrimaryKey" resultMap="AllFieldResultMap" >
+        SELECT
+            <include refid="All_Column_List"/>
+        FROM
+            ACG_INFOMATION
+        WHERE
+            ID = #{ id, jdbcType=INTEGER }
+    </select>
+
+    <!--插入一条完整的记录-->
+    <!--记录的添加、更新和删除虽然会返回受影响的记录数，但是不需要设置resultType-->
+    <insert id="insertByPrimaryKey" parameterType="com.anime.acg.model.AcgModel">
+        INSERT INTO ACG_INFOMATION
+            <!-- select和insert两条语句要注意区分括号，意义不一样 -->
+            ( ID, ACG_NAME, ACG_AUTHOR, ACG_CATEGORY, EPISODE, COMPLETED, WATCH_ABLE, COUNTRY, CREATE_TIME, UPDATE_TIME, MEMO )
+        VALUES
+            (#{id,jdbcType=INTEGER}, #{acgName,jdbcType=VARCHAR}, #{acgAuthor,jdbcType=VARCHAR}, #{acgCategory,jdbcType=VARCHAR},
+            #{episode,jdbcType=INTEGER}, #{completed,jdbcType=VARCHAR}, #{watchAble,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR},
+            #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{memo,jdbcType=VARCHAR})
+    </insert>
+
+    <!--插入部分字段-->
+    <insert id="insertSelective" parameterType="com.anime.acg.model.AcgModel">
+        INSERT INTO ACG_INFOMATION
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">ID, </if>
+            <if test="acgName != null and acgName != ''">ACG_NAME, </if>
+            <if test="acgAuthor != null and acgAuthor != ''">ACG_AUTHOR, </if>
+            <if test="acgCategory != null and acgCategory != ''">ACG_CATEGORY, </if>
+            <if test="episode != null and episode != ''">EPISODE, </if>
+            <if test="completed != null and completed != ''">COMPLETED, </if>
+            <if test="watchAble != null and watchAble != ''">WATCH_ABLE, </if>
+            <if test="country != null and country != ''">COUNTRY, </if>
+            <if test="createTime != null">CREATE_TIME, </if>
+            <if test="updateTime != null">UPDATE_TIME, </if>
+            <if test="memo != null and memo != ''">MEMO, </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''"> #{id,jdbcType=INTEGER}, </if>
+            <if test="acgName != null and acgName != ''"> #{acgName,jdbcType=VARCHAR}, </if>
+            <if test="acgAuthor != null and acgAuthor != ''"> #{acgAuthor,jdbcType=VARCHAR}, </if>
+            <if test="acgCategory != null and acgCategory != ''"> #{acgCategory,jdbcType=VARCHAR}, </if>
+            <if test="episode != null and episode != ''"> #{episode,jdbcType=INTEGER}, </if>
+            <if test="completed != null and completed != ''"> #{completed,jdbcType=VARCHAR}, </if>
+            <if test="watchAble != null and watchAble != ''"> #{watchAble,jdbcType=VARCHAR}, </if>
+            <if test="country != null and country!= ''"> #{country,jdbcType=VARCHAR}, </if>
+            <if test="createTime != null"> #{createTime,jdbcType=TIMESTAMP}, </if>
+            <if test="updateTime != null"> #{updateTime,jdbcType=TIMESTAMP}, </if>
+            <if test="memo != null and memo != ''"> #{memo,jdbcType=VARCHAR}, </if>
+        </trim>
+    </insert>
+
+    <!-- 更新一条完整的记录 -->
+    <update id="updateByPrimaryKey" parameterType="com.anime.acg.model.AcgModel">
+        UPDATE ACG_INFOMATION
+        SET
+            ACG_NAME = #{ acgName, jdbcType=VARCHAR },
+            ACG_AUTHOR = #{ acgAuthor, jdbcType=VARCHAR },
+            ACG_CATEGORY = #{ acgCategory, jdbcType=VARCHAR },
+            EPISODE = #{ episode, jdbcType=INTEGER },
+            COMPLETED = #{ completed, jdbcType=VARCHAR },
+            WATCH_ABLE = #{ watchAble, jdbcType=VARCHAR },
+            COUNTRY = #{ country, jdbcType=VARCHAR },
+            CREATE_TIME = #{ createTime, jdbcType=TIMESTAMP },
+            UPDATE_TIME = #{ updateTime, jdbcType=TIMESTAMP },
+            MEMO = #{ memo, jdbcType=VARCHAR }
+        WHERE
+            ID = #{ id, jdbcType=INTEGER }
+    </update>
+
+    <!-- 更新部分字段 -->
+    <update id="updateSelective" parameterType="com.anime.acg.model.AcgModel">
+        UPDATE ACG_INFOMATION
+        <set>
+            <if test="acgName != null and acgName != ''"> ACG_NAME = #{acgName,jdbcType=VARCHAR}, </if>
+            <if test="acgAuthor != null and acgAuthor != ''"> ACG_AUTHOR = #{acgAuthor,jdbcType=VARCHAR}, </if>
+            <if test="acgCategory != null and acgCategory != ''"> ACG_CATEGORY = #{acgCategory,jdbcType=VARCHAR}, </if>
+            <if test="episode != null and episode != ''"> EPISODE = #{episode,jdbcType=INTEGER}, </if>
+            <if test="completed != null and completed != ''"> COMPLETED = #{completed,jdbcType=VARCHAR}, </if>
+            <if test="watchAble != null and watchAble != ''"> WATCH_ABLE = #{watchAble,jdbcType=VARCHAR}, </if>
+            <if test="country != null and country != ''"> COUNTRY = #{country,jdbcType=VARCHAR}, </if>
+            <if test="createTime != null"> CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}, </if>
+            <if test="updateTime != null"> UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}, </if>
+            <if test="memo != null and memo != ''"> MEMO = #{memo,jdbcType=VARCHAR}, </if>
+        </set>
+        WHERE
+            ID = #{ id, jdbcType=INTEGER }
+    </update>
+
+    <!--删除一条记录-->
+    <delete id="deleteByPrimaryKey">
+        DELETE FROM ACG_INFOMATION
+        WHERE ID = #{ id, jdbcType=INTEGER }
+    </delete>
+
+    <!-- 根据一个关键词进行搜索：可以匹配任何字段 -->
+    <!-- SELECT * FROM ACG_INFOMATION WHERE (ACG_NAME ="key") OR (ACG_AUTHOR="key") ORDER BY id asc limit 2，5 -->
+    <select id="searchAllField" parameterType="com.anime.acg.dto.AcgQo" resultMap="AllFieldResultMap">
+        SELECT
+            <include refid="All_Column_List"/>
+        FROM ACG_INFOMATION
+        <where>
+            <choose>
+                <when test="searchKey != null and searchKey != ''">
+                    (ACG_NAME LIKE '%${searchKey}%') OR (ACG_AUTHOR LIKE '%${searchKey}%') OR (ACG_CATEGORY LIKE '%${searchKey}%') OR
+                    (COMPLETED LIKE '%${searchKey}%') OR (WATCH_ABLE LIKE '%${searchKey}%') OR (COUNTRY LIKE '%${searchKey}%') OR
+                    (MEMO LIKE '%${searchKey}%')
+                </when>
+                <otherwise>
+                    1=1
+                </otherwise>
+            </choose>
+        </where>
+        <choose>
+            <when test="pageInfo.sortField != null and pageInfo.sortField != ''">
+                ORDER BY ${pageInfo.sortField} ${pageInfo.sortOrder}
+            </when>
+            <otherwise> ORDER BY ID ASC </otherwise>
+        </choose>
+        <if test="pageInfo.pageSize != 0">
+            limit #{pageInfo.recordStart}, #{pageInfo.pageSize}
+        </if>
+    </select>
+
+    <!-- 根据一个关键词进行搜索：只能匹配关键字段（片名、作者、附加信息） -->
+    <select id="searchCriticalField" parameterType="com.anime.acg.dto.AcgQo" resultMap="AllFieldResultMap">
+        SELECT
+            <include refid="All_Column_List"/>
+        FROM ACG_INFOMATION
+        <where>
+            <choose>
+                <when test="searchKey != null and searchKey != ''">
+                    (ACG_NAME LIKE '%${searchKey}%') OR (ACG_AUTHOR LIKE '%${searchKey}%') OR (MEMO LIKE '%${searchKey}%')
+                </when>
+                <otherwise>
+                    1=1
+                </otherwise>
+            </choose>
+        </where>
+        <choose>
+            <when test="pageInfo.sortField != null and pageInfo.sortField != ''">
+                ORDER BY ${pageInfo.sortField} ${pageInfo.sortOrder}
+            </when>
+            <otherwise> ORDER BY ID ASC </otherwise>
+        </choose>
+        <if test="pageInfo.pageSize != 0">
+            limit #{pageInfo.recordStart}, #{pageInfo.pageSize}
+        </if>
+    </select>
+
+    <!-- 根据一组关键词进行高级搜索：根据不同的关键词进行综合搜索 -->
+    <!-- SELECT * FROM `acg_infomation` where ((acg_category="热血") or (country="中国")) and (completed like '%连载%'); -->
+    <select id="searchAdvanced" parameterType="com.anime.acg.dto.AcgQo" resultMap="AllFieldResultMap">
+        SELECT
+            <include refid="All_Column_List"/>
+        FROM ACG_INFOMATION
+        <where>
+            <if test="keyword != null and keyword != ''">
+                ((ACG_NAME LIKE '%${keyword}%') OR (ACG_AUTHOR LIKE '%${keyword}%') OR (MEMO LIKE '%${keyword}%'))
+            </if>
+            <if test="acgCategory != null and acgCategory != ''"> AND ACG_CATEGORY = #{acgCategory} </if>
+            <if test="completed != null and completed != ''"> AND COMPLETED = #{completed} </if>
+            <if test="watchAble != null and watchAble != ''"> AND WATCH_ABLE = #{watchAble} </if>
+            <if test="country != null and country != ''"> AND COUNTRY = #{country} </if>
+        </where>
+        <choose>
+            <when test="pageInfo.sortField != null and pageInfo.sortField != ''">
+                ORDER BY ${pageInfo.sortField} ${pageInfo.sortOrder}
+            </when>
+            <otherwise> ORDER BY ID ASC </otherwise>
+        </choose>
+        <if test="pageInfo.pageSize != 0">
+            limit #{pageInfo.recordStart}, #{pageInfo.pageSize}
+        </if>
+    </select>
+
+    <!--  统计所有符合要求的记录-->
+    <select id="getCount" parameterType="com.anime.acg.dto.AcgQo" resultType="java.lang.Long">
+        SELECT
+            COUNT(1)
+        FROM ACG_INFOMATION
+        <where>
+            <if test="keyword != null and keyword != ''">
+                ((ACG_NAME LIKE '%${keyword}%') OR (ACG_AUTHOR LIKE '%${keyword}%') OR (MEMO LIKE '%${keyword}%'))
+            </if>
+            <if test="acgCategory != null and acgCategory != ''"> AND ACG_CATEGORY = #{acgCategory} </if>
+            <if test="completed != null and completed != ''"> AND COMPLETED = #{completed} </if>
+            <if test="watchAble != null and watchAble != ''"> AND WATCH_ABLE = #{watchAble} </if>
+            <if test="country != null and country != ''"> AND COUNTRY = #{country} </if>
+        </where>
+    </select>
+</mapper>

@@ -1,3 +1,2 @@
-J2SE/out/
-*.class
 .idea
+**/target/**

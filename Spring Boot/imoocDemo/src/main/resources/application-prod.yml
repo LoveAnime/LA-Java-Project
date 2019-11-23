@@ -1,7 +1,0 @@
-server:
-  port: 80
-  context-path: /demo
-
-girl:
-  cup-size: F
-  age: 27

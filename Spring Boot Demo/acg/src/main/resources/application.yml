@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    active: dev
+  # 控制层返回html存放目录, 采用thymeleaf默认就是当前配置
+  mvc:
+    view:
+      prefix: ./templates/
+      suffix: .html
+  # set to false for hot refresh
+  thymeleaf:
+    cache: false
+
+
+# sql查询的xml和model存放路径
+mybatis:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  type-aliases-package: com.anime.acg.model
+
+# 自定义版权声明信息
+author:
+  name: anime
+  age: 28
+  describe: "author: ${author.name}, 转载请说明出处!"

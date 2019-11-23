@@ -1,0 +1,93 @@
+﻿目录
+1. 面向对象和面向过程的区别
+2. Java 语言有哪些特点
+3. 关于 JVM JDK 和 JRE 最详细通俗的解答
+4. Oracle JDK 和 OpenJDK 的对比
+5. Java和C++的区别
+6. 什么是 Java 程序的主类 应用程序和小程序的主类有何不同
+7. Java 应用程序与小程序之间有那些差别
+8. 字符型常量和字符串常量的区别
+9. 构造器 Constructor 是否可被 override
+10. 重载和重写的区别
+11. Java 面向对象编程三大特性: 封装 继承 多态
+12. String StringBuffer 和 StringBuilder 的区别是什么 String 为什么是不可变的
+13. 自动装箱与拆箱
+14. 在一个静态方法内调用一个非静态成员为什么是非法的
+15. 在 Java 中定义一个不做事且没有参数的构造方法的作用
+16. import java和javax有什么区别
+17. 接口和抽象类的区别是什么
+18. 成员变量与局部变量的区别有那些
+19. 创建一个对象用什么运算符?对象实体与对象引用有何不同?
+20. 什么是方法的返回值?返回值在类的方法里的作用是什么?
+21. 一个类的构造方法的作用是什么 若一个类没有声明构造方法,该程序能正确执行吗 ?为什么?
+22. 构造方法有哪些特性
+23. 静态方法和实例方法有何不同
+24. 对象的相等与指向他们的引用相等，两者有什么不同？
+25. 在调用子类构造方法之前会先调用父类没有参数的构造方法，其目的是?
+26. == 与 equals(重要)
+27. hashCode 与 equals (重要)
+28. 为什么Java中只有值传递
+29. 简述线程，程序、进程的基本概念。以及他们之间关系是什么
+30. 线程有哪些基本状态?
+31. 关于 final 关键字的一些总结
+32. Java 中的异常处理
+33. Java序列化中如果有些字段不想进行序列化 怎么办
+34. 获取用键盘输入常用的的两种方法
+
+
+step 1:Java 基础
+
+《Java 核心技术卷 1/2》 和 《Head First Java》
+Effective Java》、《重构》
+
+
+step 2:多线程的简单使用
+
+Java 并发编程之美》 或者 《实战 Java 高并发程序设计》 
+https://github.com/Snailclimb/JavaGuide
+
+
+
+step 3(可选):操作系统与计算机网络
+
+哈工大《操作系统》
+《网络是怎样连接的》 、《图解 HTTP》 
+
+
+step 4(可选):数据结构与算法
+
+《算法图解》(入门) 和 《大话数据结构》（入门）、《算法》（友好）、《算法导论》（经典不友好）
+
+
+step 5:前端知识
+
+前端基础 (HTML、CSS、JavaScript),当然 BootStrap、JQuery、React、VUE 等等前端框架
+
+
+step 5:MySQL
+
+《SQL 基础教程（第 2 版）》（入门）、《高性能 MySQL : 第 3 版》(进阶)、《MySQL 必知必会》。
+
+
+step 6:Maven、Git、Tomcat、IDEA、
+
+
+step 7:常用框架
+
+ Struts2(可不用学)、Spring、SpringMVC、Hibernate、Mybatis、shiro 等框架的使用
+ (可选) 熟悉 Spring 原理（大厂面试必备），然后很有必要学习一下 SpringBoot。
+ 我也遇到很多公司对于应届生直接上手SpringBoot，不过我还是推荐你把 Spring、SpringMVC 好好学一下。
+
+
+step 8:高性能网站架构
+
+Dubbo、Zookeeper、常见的消息队列（比如ActiveMq、RabbitMQ）、Redis 、Elasticsearch 的使用
+（这些东西可以通过黑马视频最后一个分布式项目来学，边看视频，边自己做，查阅网上博客，效果更好）。
+
+
+
+step 9：其他
+多线程方面的知识，NIO 和 Netty，JVM（Java内存区域、虚拟机垃圾算法、虚拟垃圾收集器、JVM内存管理）
+SpringCloud生态系统以及其他微服务常用框架
+
+JavaGuide： https://github.com/Snailclimb/JavaGuide 
