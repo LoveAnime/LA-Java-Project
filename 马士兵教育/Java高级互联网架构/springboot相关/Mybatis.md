@@ -1,4 +1,4 @@
-[toc]
+[TOC]
 # mybatis
 
 MyBatis是一个优秀的持久层框架，它对jdbc的操作数据库的过程进行封装，使开发者只需要关注SQL本身，而不需要花费精力去处理例如注册驱动、创建connection、创建statement、手动设置参数、结果集检索等jdbc繁杂的过程代码。
@@ -7,8 +7,7 @@ MyBatis是一个优秀的持久层框架，它对jdbc的操作数据库的过程
 
 ### MybatisConfig.xml
 
-  SSM中需要配置
-
+SSM中需要配置
 - 数据url
 - 数据库连接池
 - 映射文件
@@ -335,49 +334,113 @@ https://github.com/zouzg/mybatis-generator-gui
 		return mapper.selectByExample(example );
 	}
 ```
-## 多表增删改查
+## 多表查询
 
-多对多数据显示不全 只显示一条
+### 一对多
+mybatis可以使用**\<collection>**标签配置一对多查询，需要注意的是，如果有重名字段，必须取别名，否则结果集会出错。
 
+以查询用户列表（每个用户有多个角色）为例：
+```java
+package com.anime.demo.entity;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+@ApiModel("用户实体")
+public class SysUser {
+    @ApiModelProperty("用户id")
+    private Long id;
+    @ApiModelProperty("用户名")
+    private String username;
+    @ApiModelProperty("角色列表")
+    private List<SysRole> roles;
+}
 ```
-com.mashibing.springboot.entity.Account@4e4ac998[id=1,loginName=yimingge,password=123,nickName=gege,age=18,location=<null>,role=user,roleList=[Role [Hash = 31358035, id=1, name=管理员, serialVersionUID=1]],permissionList=<null>]
+```java
+package com.anime.demo.entity;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+@Data
+@ApiModel("角色实体")
+public class SysRole {
+    @ApiModelProperty("角色id")
+    private Long id;
+    @ApiModelProperty("角色名")
+    private String name;
+}
+```
+角色id和用户id的字段名相同，则角色id必须重命名：
+```xml
+<resultMap id="baseResultMap" type="com.anime.entiry.SysUser">
+    <id column="id" property="id" />
+    <result column="username" property="username" />
+    <collection ofType="com.anime.entiry.SysRole" property="roles">
+        <id column="roleId" property="id" />
+        <result column="name" property="name" />
+    </collection>
+</resultMap>
+
+<select id="listUserAndRole" resultMap="baseResultMap">
+    SELECT
+        sys_user.*,
+        sys_role.id roleId,sys_role.name
+    FROM sys_user
+    INNER JOIN sys_role_user ON sys_user.id = sys_role_user.userId
+    INNER JOIN sys_role ON sys_role.id = sys_role_user.roleId
+</select>
+```
+### 多对一
+
+mybatis可以使用**\<association>**标签配置多对一查询。
+
+根据帖子id读取一个帖子的所有回复信息，以及这个帖子所属的作者信息：
+```java
+package com.anime.demo.entity;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+@Data
+@ApiModel("回复信息")
+public class Reply {
+    @ApiModelProperty("回复id")
+    private Long id;
+    @ApiModelProperty("回复内容")
+    private String content;
+    @ApiModelProperty("所属帖子id")
+    private Long paperId;
+    @ApiModelProperty("作者")
+    private SysUser sysUser;
+}
+```
+```xml
+<resultMap id="baseResultMap" type="com.anime.entiry.Reply">
+    <id column="id" property="id" />
+    <result column="content" property="content" />
+    <result column="paperId" property="paperId" />
+    <association ofType="com.anime.entiry.SysUser" property="sysUser">
+        <id column="userId" property="id" />
+    <result column="username" property="username" />
+    </association>
+</resultMap>
+
+<select id="listUserAndRole" resultMap="baseResultMap">
+    SELECT
+        sys_user.*,
+        sys_role.id roleId,sys_role.name
+    FROM sys_user
+    INNER JOIN sys_role_user ON sys_user.id = sys_role_user.userId
+    INNER JOIN sys_role ON sys_role.id = sys_role_user.roleId
+</select>
 ```
 
-因为 字段有重复
-
-解决方案：
-
-- 删掉重复字段
-- 修改一个别名
-  - resultMap里的映射关系也得改一下
-
-### 单表修改资源载入与数据JSON异步提交
-
-### 多表关联查询 一次性载入用户角色和权限
-
-```sql
-SELECT
-	a.id as aid, 
-	a.login_name ,
-	a.password,
-	a.location,
-	r.id as rid,
-	r.name as rname,
-    p.id as pid,
-    p.uri,
-    p.c,
-    p.u,
-    p.d,
-    p.r,
-    p.name as pname
-FROM account as a 
-	inner join account_role as ar 
-		on a.id = ar.account_id
-    inner join role as r 
-		on ar.role_id = r.id
-        
-	left join role_permission rp 
-		on r.id =rp.role_id
-	left join permission p 
-		on p.id = rp.permission_id
-```
+### 多对多
+https://www.cnblogs.com/jimisun/p/9414148.html
