@@ -1,49 +1,6 @@
 [toc]
 
-# Tengine 补充
-
-## 开机启动
-
-```
-chkconfig --list
-chkconfig --add nginx
-chkconfig nginx on
-```
-
-## 时间问题
-
-```
-service ntpd status
-```
-
-## 虚拟目录
-
-       location /www {
-            alias  /var/data/www1;
-            index  index.html index.htm a.html;
-        }
-## 自动索引
-
-       location /art {
-            alias  /var/data/www1/;
-              autoindex on;
-        }
-## 动静分离
-
-```
-      location / {
-		proxy_pass http://192.168.150.11:803;
-        }
-     
-     location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|html|htm|css|js)$ {
-            root  /var/data/www1/;
-        }
-
-```
-
 # SSL
-
-
 
 ![enter image description here](http://images.gitbook.cn/3312b3d0-1d6b-11e8-a1b7-770e0be79dd9)
 

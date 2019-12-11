@@ -585,7 +585,6 @@ upstream httpds {
 ```
 location /status {
             check_status;
- 
         }
 
 ```
@@ -612,9 +611,10 @@ check_http_expect_alive http_2xx http_3xx;
 
 ##### 启动memcached
 
-```
+```shell
 memcached -d -m 128 -u root -l 192.168.43.151 -p 11211 -c 256 -P /tmp/memcached.pid
 memcached-tool 192.168.2.51:11211
+```
 参数解释：
 	-d:后台启动服务
 	-m:缓存大小
@@ -622,9 +622,6 @@ memcached-tool 192.168.2.51:11211
 	-l:IP
 	-P:服务器启动后的系统进程ID，存储的文件
 	-u:服务器启动是以哪个用户名作为管理用户
-
-```
-
 #### Nginx配置
 
 ```
@@ -636,7 +633,6 @@ upstream tomcat{
         location /tomcat {
         proxy_pass http://tomcat/;
       } 
-
 ```
 
 #### Tomcat配置
@@ -645,7 +641,7 @@ upstream tomcat{
 
 每个tomcat里面的context.xml中加入
 
-```
+```xml
 <Manager className="de.javakaffee.web.msm.MemcachedBackupSessionManager" 
 	memcachedNodes="n1:192.168.43.151:11211" 
     sticky="false" 
@@ -659,7 +655,7 @@ upstream tomcat{
 
 ### http_proxy 本地磁盘缓存
 
-```
+```shell
 proxy_cache_path /path/to/cache levels=1:2 keys_zone=my_cache:10m max_size=10g inactive=60m use_temp_path=off;
 server {
      set $upstream http://ip:port
@@ -668,20 +664,61 @@ server {
                    proxy_pass $upstream;
                 }
 }
-
-
-	/path/to/cache  #本地路径，用来设置Nginx缓存资源的存放地址
-	levels          #默认所有缓存文件都放在同一个/path/to/cache下，但是会影响缓存的性能，因此通常会在/path/to/cache下面建立子目录用来分别存放不同的文件。假设levels=1:2，Nginx为将要缓存的资源生成的key为f4cd0fbc769e94925ec5540b6a4136d0，那么key的最后一位0，以及倒数第2-3位6d作为两级的子目录，也就是该资源最终会被缓存到/path/to/cache/0/6d目录中
-	key_zone        #在共享内存中设置一块存储区域来存放缓存的key和metadata（类似使用次数），这样nginx可以快速判断一个request是否命中或者未命中缓存，1m可以存储8000个key，10m可以存储80000个key
-	max_size        #最大cache空间，如果不指定，会使用掉所有disk space，当达到配额后，会删除最少使用的cache文件
-	inactive        #未被访问文件在缓存中保留时间，本配置中如果60分钟未被访问则不论状态是否为expired，缓存控制程序会删掉文件。inactive默认是10分钟。需要注意的是，inactive和expired配置项的含义是不同的，expired只是缓存过期，但不会被删除，inactive是删除指定时间内未被访问的缓存文件
-	use_temp_path   #如果为off，则nginx会将缓存文件直接写入指定的cache文件中，而不是使用temp_path存储，official建议为off，避免文件在不同文件系统中不必要的拷贝
-	proxy_cache     #启用proxy cache，并指定key_zone。另外，如果proxy_cache off表示关闭掉缓存。
-
 ```
 
+- /path/to/cache：本地路径，用来设置Nginx缓存资源的存放地址
+- levels：默认所有缓存文件都放在同一个/path/to/cache下，但是会影响缓存的性能，因此通常会在/path/to/cache下面建立子目录用来分别存放不同的文件。假设levels=1:2，Nginx为将要缓存的资源生成的key为f4cd0fbc769e94925ec5540b6a4136d0，那么key的最后一位0，以及倒数第2-3位6d作为两级的子目录，也就是该资源最终会被缓存到/path/to/cache/0/6d目录中
+- key_zone：在共享内存中设置一块存储区域来存放缓存的key和metadata（类似使用次数），这样nginx可以快速判断一个request是否命中或者未命中缓存，1m可以存储8000个key，10m可以存储80000个key
+- max_size：最大cache空间，如果不指定，会使用掉所有disk space，当达到配额后，会删除最少使用的cache文件
+- inactive：未被访问文件在缓存中保留时间，本配置中如果60分钟未被访问则不论状态是否为expired，缓存控制程序会删掉文件。inactive默认是10分钟。需要注意的是，inactive和expired配置项的含义是不同的，expired只是缓存过期，但不会被删除，inactive是删除指定时间内未被访问的缓存文件
+- use_temp_path：如果为off，则nginx会将缓存文件直接写入指定的cache文件中，而不是使用temp_path存储，official建议为off，避免文件在不同文件系统中不必要的拷贝
+- proxy_cache：启用proxy cache，并指定key_zone。另外，如果proxy_cache off表示关闭掉缓存。
+
+
+# Tengine 补充
+
+## 开机启动
+
+```shell
+chkconfig --list
+chkconfig --add nginx
+chkconfig nginx on
+```
+
+## 时间问题
+
+session共享时，如果两台服务器的时间不一致，会导致session不能同步。
+
+```shell
+service ntpd status
+```
+
+## 虚拟目录
+```shell
+       location /www {
+            alias  /var/data/www1;
+            index  index.html index.htm a.html;
+        }
+```
+## 自动索引
+```shell
+       location /art {
+            alias  /var/data/www1/;
+              autoindex on;
+        }
+```
+## 动静分离
+
+```shell
+      location / {
+		proxy_pass http://192.168.150.11:803;
+        }
+     
+     location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|html|htm|css|js)$ {
+            root  /var/data/www1/;
+        }
+```
 # 课后作业
 
-1 . 在虚拟机里 搭上Nginx环境
-
+1. 在虚拟机里 搭上Nginx环境
 2. location 
