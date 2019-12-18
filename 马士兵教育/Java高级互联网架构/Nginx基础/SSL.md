@@ -17,11 +17,8 @@ SSL 能够帮助系统在客户端和服务器之间建立一条安全通信通�
 3、证书的序列号：由CA给予每一个证书分配的唯一的数字型编号，当证书被取消时，实际上是将此证书序列号放入由CA签发的CRL（Certificate Revocation List证书作废表，或证书黑名单表）中。这也是序列号唯一的原因。
 
 4、主题信息：证书持有人唯一的标识符(或称DN-distinguished name)这个名字在 Internet上应该是唯一的。DN由许多部分组成，看起来象这样：
-
-CN=Bob Allen, OU=Total Network Security Division
-
+> CN=Bob Allen, OU=Total Network Security Division
 O=Network Associates, Inc.
-
 C=US
 
 这些信息指出该科目的通用名、组织单位、组织和国家或者证书持有人的姓名、服务处所等信息。
@@ -33,8 +30,6 @@ C=US
 7、发布者的数字签名：这是使用发布者[私钥](https://baike.baidu.com/item/私钥)生成的签名，以确保这个证书在发放之后没有被撰改过。
 
 8、签名算法标识符：用来指定CA签署证书时所使用的签名算法。算法标识符用来指定CA签发证书时所使用的[公开密钥](https://baike.baidu.com/item/公开密钥)算法和HASH算法。
-
-
 
 ## 抓包工具
 
@@ -60,7 +55,6 @@ CA 是负责签发证书、认证证书、管理已颁发证书的机关。它�
 - GlobalSign
 - Digicert
 - VeriSign
-
 - GeoTrust
 - Thawte
 - Network Solutions
@@ -69,77 +63,87 @@ CA 是负责签发证书、认证证书、管理已颁发证书的机关。它�
 
 ## 证书种类
 
-
-
 - DV（Domain Validation）证书只进行域名的验证，一般验证方式是提交申请之后CA会往你在whois信息里面注册的邮箱发送邮件，只需要按照邮件里面的内容进行验证即可。
-
 - OV（Organization Validation）证书在DV证书验证的基础上还需要进行公司的验证，一般他们会通过购买邓白氏等这类信息库来查询域名所属的公司以及这个公司的电话信息，通过拨打这个公司的电话来确认公司是否授权申请OV证书。
-
 - EV证书一般是在OV的基础上还需要公司的金融机构的开户许可证，不过不同CA的做法不一定一样，例如申请人是地方政府机构的时候是没有金融机构的开户证明的，这时候就会需要通过别的方式去鉴别申请人的实体信息。
 
 ![83cf43c8886ff637c1eb77a319bb0fc5a327e3e5](https://oss.aliyuncs.com/yqfiles/83cf43c8886ff637c1eb77a319bb0fc5a327e3e5.jpeg)
 
-## 多网站公用同一证书
+多网站公用同一证书
 
-## OPenSSL 自签名
+## OPenSSL自签名
+OpenSSL是SSL规范的一种实现。
 
-certmgr.msc
+- key：私钥（用于解密）
+- csr：证书请求文件（ Certificate Signing Request ，公钥，由私钥生成）
+- crt：经过CA认证的证书（ certificate ，公钥+签名生成，可以自签名）
 
-下载 
+下载：http://slproweb.com/products/Win32OpenSSL.html
 
-http://slproweb.com/products/Win32OpenSSL.html
+### 生成私钥key
 
-### 生成私钥
-
-genrsa
-
-制台输入 genrsa，会默认生成一个 2048 位的私钥
-
+```shell
+openssl genrsa -des3 -out server.key 2048
 ```
-openssl genrsa -des3 -out server.key 1024
-```
+> 2048位的rsa私钥，des3算法， openssl格式
 
-### 由私钥生成证书
+生成过程需要输入至少四位的密码，也可以用` openssl rsa -in server.key -out server.key `来生成不需要密码的key。
 
-```
-openssl req -new -key c:/dev/my.key -out c:/dev/my.csr
+### 生成证书请求文件csr
+
+```shell
 openssl req -new -key server.key -out server.csr
 ```
+生成过程需要填入基本信息，包括国家、省份、机构、域名等
+> Common Name：域名，即为我们要使用 HTTPS 访问的域名
 
-查看证书
-
- Common Name，这里输入的域名即为我们要使用 HTTPS 访问的域名
-
-```
-req -text -in c:/dev/my.csr -noout
-```
-
-生成解密的key 
-
-```
-openssl rsa -in server.key -out server.key.unsecure
+可以从公钥中查看生成过程填入的基本信息：
+```shell
+req -text -in server.csr -noout
 ```
 
-### 签名
+### 生成证书crt
 
-工具
+如果想要获得CA认证，则提供上述key和csr两个文件到第三方机构申请证书crt（有的系统也会使用cer或pem后缀）。
 
-https://sourceforge.net/projects/xca/
+也可以使用openssl进行签名生成证书。
 
+签名有两种生成方式：
+
+- 第一种是利用`-signkey`参数指定私钥直接进行自签名：
+
+```shell
+openssl x509 -req -days 3650 -in server.csr -signkey server.key -out server.crt
 ```
- x509 -req -days 365 -in c:/dev/my.csr -signkey c:/dev/my.key -out c:/dev/sign.crt
- openssl x509 -req -days 365 -in server.csr -signkey server.key.unsecure -out server.crt
-```
+- 第二种是自己充当证书办法机构，自己给自己颁发证书：
 
-查看证书
-
+首先利用私钥生成CA证书
+```shell
+openssl req -new -x509 -key server.key -out ca.crt -days 3650
 ```
-x509 -text -in c:\openSSLDemo\fd.crt -noout
+然后利用这个ca.crt给自己颁发一个证书：
+```shell
+openssl x509 -req -days 3650 -in server.csr -CA ca.crt -CAkey server.key -CAcreateserial -out server.crt
 ```
+`-CA`：指定用于签名的CA证书
+`-CAkey`：指定用于签名的CA私钥
+`X.509`：是一种证书格式，证书文件一般以crt结尾，一般有两种格式：
+> pem： Privacy Enhanced Mail 。BASE64编码的文本，内容以"-----BEGIN..."开头, "-----END..."结尾。
+> DER：Distinguished Encoding Rules。二进制文件，不可读。
 
-- Country Name (2 letter code) [XX]:CN           #请求签署人的信息
-- State or Province Name (full name) []: #请求签署人的省份名字
-- Locality Name (eg, city) [Default City]:# 请求签署人的城市名字
-- Organization Name (eg, company) [Default Company Ltd]:#请求签署人的公司名字
-- Organizational Unit Name (eg, section) []:#请求签署人的部门名字
-- Common Name (eg, your name or your server's hostname) []:#这里一般填写请求人的的服务器域名，
+由证书查看公钥信息：
+```shell
+x509 -text -in server.crt -noout
+```
+- Country Name (2 letter code) [XX]:CN：请求签署人的信息
+- State or Province Name (full name) []：请求签署人的省份名字
+- Locality Name (eg, city) [Default City]：请求签署人的城市名字
+- Organization Name (eg, company) [Default Company Ltd]：请求签署人的公司名字
+- Organizational Unit Name (eg, section) []：请求签署人的部门名字
+- Common Name (eg, your name or your server's hostname) []：这里一般填写请求人的的服务器域名
+
+window版的图像化操作工具：https://sourceforge.net/projects/xca/
+
+## 443
+
+浏览器判断是https协议（SSL协议），会自动到服务器从443端口去下载证书到浏览器（TLS协议），然后完成数据校验。

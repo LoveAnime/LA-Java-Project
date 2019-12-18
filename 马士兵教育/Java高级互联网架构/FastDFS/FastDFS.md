@@ -10,7 +10,7 @@ FAQ：http://bbs.chinaunix.net/thread-1920470-1-1.html
 
 源码资源： https://github.com/happyfish100
 
- FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。
+ **FastDFS是一个开源的轻量级分布式文件系统**，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。
 
 FastDFS为互联网量身定制，充分考虑了冗余备份、负载均衡、线性扩容等机制，并注重高可用、高性能等指标，使用FastDFS很容易搭建一套高性能的文件服务器集群提供文件上传、下载等服务。
 
@@ -27,10 +27,6 @@ FastDFS服务端有两个角色：跟踪器（tracker）和存储节点（storag
 当存储空间不足或即将耗尽时，可以动态添加卷。只需要增加一台或多台服务器，并将它们配置为一个新的卷，这样就扩大了存储系统的容量。
 
 FastDFS中的文件标识分为两个部分：卷名和文件名，二者缺一不可。
-
-### web项目架构
-
-![](C:\Users\Administrator\Desktop\tmp\fastdfs图\install.png)
 
 ### 谁在用？
 
@@ -65,8 +61,6 @@ FastDFS中的文件标识分为两个部分：卷名和文件名，二者缺一�
   51CTO（http://www.51cto.com/）
   搜房网（http://www.soufun.com/）
 
-
-
 ### 架构
 
 - tracker Server：
@@ -85,21 +79,16 @@ FastDFS中的文件标识分为两个部分：卷名和文件名，二者缺一�
 - 文件标识：包括两部分：组名和文件名（包含路径）
 -  meta data：文件相关属性，键值对（Key Value Pair）方式，如：width=1024,heigth=768
 
+**FastDFS架构图**
+![FastDFS架构图](FastDFS架构图.jpg)
 
-
-
-
-### 上传流程
+#### 上传流程
 
 ![](C:\Users\Administrator\Desktop\tmp\fastdfs图\upload.png)
-
-
 
 - client询问tracker上传到的storage，不需要附加参数；
 - tracker返回一台可用的storage；
 - client直接和storage通讯完成文件上传
-
-
 
 内部机制如下：
 
@@ -138,7 +127,7 @@ FastDFS中的文件标识分为两个部分：卷名和文件名，二者缺一�
 
 当文件存储到某个子目录后，即认为该文件存储成功，接下来会为该文件生成一个文件名，文件名由group、存储目录、两级子目录、fileid、文件后缀名（由客户端指定，主要用于区分文件类型）拼接而成。
 
-### 下载流程
+#### 下载流程
 
 ![](C:\Users\Administrator\Desktop\tmp\fastdfs图\download.png)
 
