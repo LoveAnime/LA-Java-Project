@@ -62,7 +62,7 @@ FastDFS中的文件标识分为两个部分：卷名和文件名，二者缺一�
   搜房网（http://www.soufun.com/）
 
 ### 架构
-
+![FastDFS架构图](FastDFS架构图.jpg)
 - tracker Server：
   - 主节点，跟踪服务器，主要做调度工作，在访问上起负载均衡的作用。
   - 记录storage server的状态，是连接Client和Storage server的枢纽。
@@ -79,13 +79,9 @@ FastDFS中的文件标识分为两个部分：卷名和文件名，二者缺一�
 - 文件标识：包括两部分：组名和文件名（包含路径）
 -  meta data：文件相关属性，键值对（Key Value Pair）方式，如：width=1024,heigth=768
 
-**FastDFS架构图**
-![FastDFS架构图](FastDFS架构图.jpg)
-
 #### 上传流程
 
-![](C:\Users\Administrator\Desktop\tmp\fastdfs图\upload.png)
-
+![FastDFS上传流程](FastDFS上传流程.jpg)
 - client询问tracker上传到的storage，不需要附加参数；
 - tracker返回一台可用的storage；
 - client直接和storage通讯完成文件上传
@@ -129,15 +125,13 @@ FastDFS中的文件标识分为两个部分：卷名和文件名，二者缺一�
 
 #### 下载流程
 
-![](C:\Users\Administrator\Desktop\tmp\fastdfs图\download.png)
+![FastDFS下载流程](FastDFS下载流程.jpg)
 
 - client询问tracker下载文件的storage，参数为文件标识（组名和文件名）；
 - tracker返回一台可用的storage；
 - client直接和storage通讯完成文件下载。
 
-![](C:\Users\Administrator\Desktop\tmp\fastdfs图\find.jpg)
-
-### binlog
+#### binlog
 
 每个storage写文件后，同时会写一份binlog，binlog里不包含文件数据，只包含文件名等元信息，这份binlog用于后台同步，storage会记录向group内其他storage同步的进度，以便重启后能接上次的进度继续同步；进度以时间戳的方式进行记录，所以最好能保证集群内所有server的时钟保持同步。
 
@@ -150,8 +144,6 @@ FastDFS中的文件标识分为两个部分：卷名和文件名，二者缺一�
 | 文件访问方式           | 专有API     | POSIX   | 支持POSIX                                |
 | 硬件成本               | 较低        | 中等    | 高                                       |
 | 相同内容文件只保存一份 | 支持        | 不支持  | 不支持                                   |
-
-
 
 
 
