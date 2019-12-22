@@ -163,8 +163,6 @@ FastDFS中的文件标识分为两个部分：卷名和文件名，二者缺一�
 
 ## 单机安装
 
-准备linux服务器或虚拟机
-
 Tracker 和 Storage 安装在一台机器上
 
 ### 版本
@@ -179,7 +177,7 @@ FastDFS是C语言开发的应用。安装必须使用make、cmake和gcc编译器
 
 ### 安装FastDFS核心库
 
-libfastcommon是从FastDFS 和FastDHT 中提取出来的公共C函数库
+libfastcommon是从FastDFS 和FastDHT中提取出来的公共C函数库
 
 #### 上传文件后解压缩
 
@@ -191,13 +189,9 @@ libfastmon没有提供make命令安装文件。使用的是shell脚本执行编�
 
 shell脚本为make.sh
 
-编译
+编译：```./make.sh```
 
-```./make.sh```
-
-安装
-
-```./make.sh install```
+安装：```./make.sh install```
 
 有固定的默认安装位置。在/usr/lib64和/usr/include/fastcommon两个目录中。
 
@@ -205,7 +199,7 @@ shell脚本为make.sh
 
 因为 FastDFS 主程序设置的 lib 目录是/usr/local/lib，所以需要创建软链接
 
-```
+```shell
 ln -s /usr/lib64/libfastcommon.so /usr/local/lib/libfastcommon.so
 
 ln -s /usr/lib64/libfastcommon.so /usr/lib/libfastcommon.so
@@ -215,31 +209,28 @@ ln -s /usr/lib64/libfdfsclient.so /usr/local/lib/libfdfsclient.so
 ln -s /usr/lib64/libfdfsclient.so /usr/lib/libfdfsclient.so
 ```
 
-
-
 ### FastDFS主程序安装
 
 #### 上传并解压缩
 
-```
+```shell
 tar -zxf FastDFS_v5.08.tar.gz -C /usr/local/fastdfs
 ```
 
 #### 编译安装
 
-```
+```shell
 ./make.sh
 ./make.sh install
 ```
 
 安装后，FastDFS主程序所在位置：
 
-```
+```shell
 /usr/bin - 可执行文件所在位置。
 /etc/fdfs - 配置文件所在位置。
-/usr/lib64 - 主程序代码所在位置
+/usr/lib64 - 主程序代码所在位置（libfast*）
 /usr/include/fastdfs - 包含的一些插件组所在位置
-
 ```
 
 ### 服务配置
@@ -258,15 +249,13 @@ tar -zxf FastDFS_v5.08.tar.gz -C /usr/local/fastdfs
 
 - client.conf.sample - FastDFS提供的命令行客户端配置文件模板。可以通过命令行测试FastDFS有效性。
 
-
-
 ### Tracker 服务
 
 #### 修改配置文件
 
 复制一份模板配置文件
 
-```
+```shell
 cd /etc/fdfs
 
 cp tracker.conf.sample tracker.conf
@@ -276,17 +265,17 @@ cp tracker.conf.sample tracker.conf
 
 修改 base_path 路径，base_path FastDFSTracker启动后使用的根目录，用来存放Tracker data和logs。
 
-```base_path=/home/yuqing/fastdfs -> base_path=/var/data/fastdfs-tracker（自定义目录）```
+`base_path=/home/yuqing/fastdfs -> base_path=/var/data/fastdfs-tracker（自定义目录）`
 
 配置中的路径需要先创建好才能启动服务
 
-```
+```shell
 mkdir -p /var/data/fastdfs-tracker
 ```
 
 ####  启动Tracker
 
-```
+```shell
 /etc/init.d/fdfs_trackerd start
 ```
 
@@ -294,23 +283,21 @@ mkdir -p /var/data/fastdfs-tracker
 
 ####  查看服务状态
 
-```
+```shell
 ps -ef | grep fdfs
 ```
 
 #### 停止服务
 
-```
+```shell
 /etc/init.d/fdfs_trackerd stop
 ```
 
 #### 重启服务
 
-```
+```shell
 /etc/init.d/fdfs_trackerd restart
 ```
-
-
 
 ### 启动 Storage
 
@@ -341,8 +328,6 @@ tracker_server=192.168.150.11:22122 -> tracker_server=tracker服务IP:22122
 /etc/init.d/fdfs_storaged start
 ```
 
-
-
 启动成功后，配置文件中base_path指向的目录中出现FastDFS服务相关数据目录（data目录、logs目录）
 
 配置文件中的store_path0指向的目录中同样出现FastDFS存储相关数据录（data目录）
@@ -351,25 +336,17 @@ tracker_server=192.168.150.11:22122 -> tracker_server=tracker服务IP:22122
 
 Storage服务器启动比较慢，因为第一次启动的时候，需要创建256*256个目录。
 
-
-
 #### 查看服务状态
 
 ```
 /etc/init.d/fdfs_storaged status
 ```
 
-
-
 #### 停止服务
 
 ```
 /etc/init.d/fdfs_storaged stop
 ```
-
-
-
-
 
 #### 重启服务
 
@@ -381,26 +358,21 @@ Storage服务器启动比较慢，因为第一次启动的时候，需要创建2
 
 #### 修改配置文件
 
-```
+```shell
 cd /etc/fdfs
 cp client.conf.sample client.conf
-
 ```
 
 client.conf配置文件中主要描述客户端的行为，需要进行下述修改：
 
-```
+```shell
 vi /etc/fdfs/client.conf
 
 base_path=/home/yuqing/fastdfs -> base_path=/fastdfs/client （自定义目录）
-
 tracker_server=192.168.150.11:22122 -> tracker_server=tracker服务IP:22122
-
 ```
 
 base_path - 就是客户端命令行执行过程时临时数据存储位置。
-
-
 
  创建自定义目录
 
@@ -417,22 +389,14 @@ mkdir -p /fastdfs/client
 group1/M00/00/00/wKiWDV0xfqWAFe1OAAAib-i5DLU637.log
 ```
 
-
-
 上传结束后，返回group1/M00/00/00/xxxxxxxxxx.xxx，检查storage服务结点中的$store_path0/data/00/00/目录中是否有上传的文件（一般情况上传的文件按顺序保存在$store_path0/data/00/00/目录中，不能完全保证）。
 
-
-
 上传文件结果：group1/M00/00/00/wKiWDV0xfqWAFe1OAAAib-i5DLU637.log
-
-
-
-
 
 - 组名：**group1**文件上传后所在的storage组名称，在文件上传成功后有storage服务器返回，需要客户端自行保存。
 -  虚拟磁盘路径：**M00**  storage配置的虚拟路径，与磁盘选项store_path*对应。如果配置了store_path0则是M00，如果配置了store_path1则是M01，以此类推。
 - 数据两级目录：**/00/00** storage服务器在每个虚拟磁盘路径下创建的两级目录，用于存储数据文件。
-- 文件名：**wKiWDV0xfqWAFe1OAAAib-i5DLU637.log**
+- 文件名：**wKiWDV0xfqWAFe1OAAAib-i5DLU637.log**。文件名由源ip、时间戳、文件信息、随机数等组成的字符串经过base64编码后得到的。
 
 
 
@@ -471,17 +435,13 @@ vi /usr/local/fastdfs/fastdfs-nginx-module/src/config
 
 ```
 CORE_INCS="$CORE_INCS /usr/include/fastdfs /usr/include/fastcommon/"
-
 ```
 
 #### 编译安装Nginx
 
-```
-./configure --prefix=/usr/local/tengine
---add-module=/root/fastdfs-nginx-module/src/
-```
-
-```
+```shell
+make clean 
+./configure --prefix=/usr/local/tengine --add-module=/root/fastdfs-nginx-module/src/
 make && make install
 ```
 
@@ -495,11 +455,10 @@ cp /root/fastdfs-nginx-module/src/mod_fastdfs.conf /etc/fdfs/
 
 ##### 修改配置文件 mod_fastdfs.conf
 
-```
+```shell
 tracker_server=192.168.2.109:22122
 url_have_group_name = true
 store_path0=/var/data/fastdfs-storage/store
-
 ```
 
 ##### 拷贝http服务需要的配置
@@ -518,15 +477,13 @@ ln -s /var/data/fastdfs-storage/store/data/  /var/data/fastdfs-storage/store/dat
 
 ####  修改nginx配置文件
 
-```
+```shell
     location ~ /group([0-9])/M00 {
         ngx_fastdfs_module;
     }
-    
-    http://192.168.150.11/group1/M00/00/00/wKiWC10xxc6AfHCKAAAib-i5DLU543_big.log
 ```
 
-
+http://192.168.150.11/group1/M00/00/00/wKiWC10xxc6AfHCKAAAib-i5DLU543_big.log
 
 #### 文件名
 
@@ -538,15 +495,11 @@ add_header Content-Disposition "attachment;filename=$arg_attname";
 
 ## JavaApi
 
+依赖源码：https://github.com/tobato/FastDFS_Client
 
+maven依赖：fastdfs-client
 
-https://github.com/tobato/FastDFS_Client
-
-RAID
-
-配置
-
-```
+```yaml
 fdfs:
   so-timeout: 1500
   connect-timeout: 600
@@ -554,45 +507,38 @@ fdfs:
   - 192.168.150.13:22122
 ```
 
-
-
 ### 上传文件
 
-
-
-```
+```java
   // 元数据
   Set<MetaData> metaDataSet = new HashSet<MetaData>();
-        metaDataSet.add(new MetaData("Author", "yimingge"));
-        metaDataSet.add(new MetaData("CreateDate", "2016-01-05"));
+  metaDataSet.add(new MetaData("Author", "yimingge"));
+  metaDataSet.add(new MetaData("CreateDate", "2016-01-05"));
         
-        
-  	try {
-			StorePath uploadFile = null;
-			uploadFile = fc.uploadFile(filename.getInputStream(), filename.getSize(), getFileExtName(filename.getOriginalFilename()), metaDataSet);
+  try {
+    StorePath uploadFile = null;
+	uploadFile = fc.uploadFile(filename.getInputStream(), filename.getSize(), getFileExtName(filename.getOriginalFilename()), metaDataSet);
 	
-			account.setPassword(password);
-			account.setLocation(uploadFile.getPath());
-		
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	account.setPassword(password);
+	account.setLocation(uploadFile.getPath());
+	
+  } catch (FileNotFoundException e) {
+	e.printStackTrace();
+  }
 ```
 
 获取文件后缀
 
-```
+```java
 	private String getFileExtName(String name) {
 		// TODO Auto-generated method stub
 		return (name.substring(name.lastIndexOf(".")+1));
 	}
-	
 ```
 
 或
 
-```
+```java
 FilenameUtils.getExtension
 ```
 
@@ -604,38 +550,35 @@ uploadFile.getFullPath() ： group1/M00/00/00/wKiWDV0u7ZKALKtNAAADP9sEx2w432.sql
 
 uploadFile.getPath() ： M00/00/00/wKiWDV0u7ZKALKtNAAADP9sEx2w432.sql
 
-
-
 ### 缩略图
 
 配置
 
-```
+```yaml
   thumb-image:
     width: 150
     height: 150
 ```
 
-
-
-```
+```java
 uploadFile  = fc.uploadImageAndCrtThumbImage(filename.getInputStream(), filename.getSize(), FilenameUtils.getExtension(filename.getOriginalFilename()), metaDataSet);
-		
 ```
 
 ![1563360427239](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1563360427239.png)
 
 ### 下载文件
 
+```java
 	@RequestMapping("/down")
-		@ResponseBody
-		public ResponseEntity<byte[]> down(HttpServletResponse resp) {
-			
-			DownloadByteArray cb = new DownloadByteArray();
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-			headers.setContentDispositionFormData("attachment", "aaa.xx");
-			byte[] bs = fc.downloadFile("group1", "M00/00/00/wKiWDV0vAb-AcOaYABf1Yhcsfws9181.xx", cb);
-			
-		return new ResponseEntity<>(bs,headers,HttpStatus.OK);
-		}
+	@ResponseBody
+	public ResponseEntity<byte[]> down(HttpServletResponse resp) {
+		
+		DownloadByteArray cb = new DownloadByteArray();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		headers.setContentDispositionFormData("attachment", "aaa.xx");
+		byte[] bs = fc.downloadFile("group1", "M00/00/00/wKiWDV0vAb-AcOaYABf1Yhcsfws9181.xx", cb);
+		
+	return new ResponseEntity<>(bs,headers,HttpStatus.OK);
+	}
+```
