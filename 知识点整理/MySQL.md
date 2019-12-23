@@ -1,5 +1,31 @@
 [TOC]
 
+# MySQL常用语法
+
+## 根据子查询结果删除记录
+
+MySQL不允许在子查询中使用要删除的表
+
+错误示范：
+```mysql
+DELETE FROM risk_user_1213 WHERE sheet1.phone IN (
+	SELECT phone FROM risk_user_1213 WHERE EXISTS (
+        SELECT 1 FROM black_user WHERE risk_user_1213.phone = black_user.phone
+    )
+);
+```
+正确示范：
+```mysql
+DELETE FROM risk_user_1213 WHERE sheet1.phone IN (
+	SELECT * FROM (
+		SELECT phone FROM risk_user_1213 WHERE EXISTS (
+            SELECT 1 FROM black_user WHERE risk_user_1213.phone = black_user.phone
+        )
+	) t
+);
+```
+
+# MySQL主从复制
 主数据库：152.32.221.2
 从数据库：106.75.189.75
 
@@ -19,7 +45,8 @@ FLUSH PRIVILEGES;
 ```shell
 [mysqld]
 server-id=1
-binlog-do-db=app #这个是需要同步的数据库，app是一个数据库，自行先创建
+binlog-do-db=bvay #这个是需要同步的数据库，app是一个数据库，自行先创建
+binlog-do-db=bvay_manage
 ```
 ```sql
 show master status;
