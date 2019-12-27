@@ -25,6 +25,19 @@ DELETE FROM risk_user_1213 WHERE sheet1.phone IN (
 );
 ```
 
+## 更新某个字段
+更新字段不允许通过'+'字节拼接字符串
+
+错误示范：
+```mysql
+UPDATE sys_permission SET fullParentId = parentId + '/' WHERE parentId != 0;
+```
+
+正确示范：
+```mysql
+UPDATE sys_permission SET fullParentId =CONCAT(parentId,'/')  WHERE parentId != 0;
+```
+
 # MySQL主从复制
 主数据库：152.32.221.2
 从数据库：106.75.189.75
